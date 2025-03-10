@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 
         public GameObject titleScreen;
 
+       public GameObject tittleScreen;
         
    
       
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviour
      
     IEnumerator SpawnTarget() 
     {
-        while (true)
+        while (isGameActive)
         {
              yield return new WaitForSeconds(spawnRate);
             int index = Random.Range(0, targets.Count);
@@ -71,14 +72,16 @@ public class GameManager : MonoBehaviour
    
 
 
-    public void StartGame()
+    public void StartGame(int difficulty)
     {
+        spawnRate /= difficulty;
         isGameActive = true;
         gameOverText.gameObject.SetActive(false);
         titleScreen.gameObject.SetActive(false);
         score = 0;
         StartCoroutine(SpawnTarget());
         UpdateScore(0);
+        titleScreen.gameObject.SetActive(false);
     }
 
     public void RestartGame()
